@@ -7,12 +7,19 @@ The goal is to give Django Template an access to NPM ecosystem (babel, web compo
 ## How?
 
 1. Write your JavaScript files using NPM and modern technologies.
+   - d
+   - Optionally, the files should be stored in `project/static/src`.
 
-2. Write your Django Template (as always) and save it with `.ejs` extension. 
+2. Write your Django Template (as always) and save it with `.ejs` extension.
    - You don't need to add `<script src="...">` since this what Webpack is for.
    - Use Django [`{{ json_script }}`](https://docs.djangoproject.com/en/3.1/ref/templates/builtins/#json-script) tag to pass initial data from Django view to JavaScript.
+   - Files location:
+     - The files can be located anywhere.
+     - Either specify the location in `HtmlWebpackPlugin`. 
+     - Or write a script that find all `.ejs` files in project.
+     - After build, `.ejs` will be coverted to `.html` and be saved as same location as `.ejs` files using `FileManagerPlugin`. 
 
-3. Now Webpack will bundle your JavaScript files and will generate new Django Template in HTML (based on `.ejs` files  you wrote before).
+3. Webpack will bundle your JavaScript files and will generate new Django Template in HTML (based on `.ejs` files  you wrote before).
 
 4. The generated HTML and JS should be ready to be used in Django Template.
 
