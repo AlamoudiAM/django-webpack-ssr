@@ -112,17 +112,7 @@ const shared = (env) => {
         resolve: {
             extensions: ['.js', '.json'],
         },
-        plugins,
-        devServer: {
-            contentBase: OUTPUT_PATH,
-            compress: true,
-            overlay: {
-                errors: true,
-            },
-            port: 3000,
-            host: '0.0.0.0',
-            disableHostCheck: true,
-        },
+        plugins
     };
 };
 

@@ -5,7 +5,8 @@
     "description": "",
     "scripts": {
         "build": "webpack",
-        "build:prod": "webpack --env.NODE_ENV=production --optimize-minimize"
+        "build:prod": "webpack --env.NODE_ENV=production --optimize-minimize",
+        "watch": "webpack --watch --progress"
     },
     "author": "",
     "license": "Apache-2.0",
