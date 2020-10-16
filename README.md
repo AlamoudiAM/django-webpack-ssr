@@ -2,31 +2,33 @@
 
 ## Goal 
 
-The goal is to give Django Template an access to NPM ecosystem (babel, web comopnents, react, jsx, vue, antd ..etc)  while still having all Django sweets. 
+The goal is to give Django Template an access to NPM ecosystem (babel, web components, react, jsx, vue, antd ..etc.)  while still having all Django sweets. 
 
-## How ?
+## How?
 
-1. Write your JavaScript files while using NPM and modern technologies.
+1. Write your JavaScript files using NPM and modern technologies.
 
-2. Write your Django Template as always and save it with `.ejs` extension. (You don't need to add `<script src="...">` since this what Webpack is for)
+2. Write your Django Template (as always) and save it with `.ejs` extension. 
+   - You don't need to add `<script src="...">` since this what Webpack is for.
+   - Use Django [`{{ json_script }}`](https://docs.djangoproject.com/en/3.1/ref/templates/builtins/#json-script) tag to pass initial data from Django view to JavaScript.
 
-3. Now Webpack will bundle your JavaScript files and will generate new Django Template in HTML (based on `.ejs` files  you wrote before)
+3. Now Webpack will bundle your JavaScript files and will generate new Django Template in HTML (based on `.ejs` files  you wrote before).
 
 4. The generated HTML and JS should be ready to be used in Django Template.
 
-## Why ?
+## Why?
 
 In my experience, separating frontend from backend for solo developer is exhausting. I'm not saying it's a bad idea but I'm saying it isn't productive for single developer. As a solo developer I cannot handle:
 
-- managing permissions in two places (backend and fronted)
-- managing routings in two places (backend and fronted)
+- managing permissions in two places (backend and fronted).
+- managing routings in two places (backend and fronted).
 
 Also I'm losing great Django features such as:
 
 - Quick and easy forms setup and validation (+ crispy form). 
 - Form CSRF protection. 
 - Easy passing data from views to Django Template.
-- Builtin Authentication views.
+- Built-in Authentication views.
 
 On the other hand, I still need to use NPM ecosystem for modernity.
 
@@ -52,11 +54,11 @@ module.exports = {
   },
 	/* ... */
   plugins: [
-  	// every django template page should have its own HtmlWebpackPlugin
+  	// every Django template page should have its own HtmlWebpackPlugin
     new HtmlWebpackPlugin({
-        filename: 'page-one.html', // the generated django template file name
+        filename: 'page-one.html', // the generated Django template file name
         chunks: ['pageOne'],  // for optimization only include the needed entry (bundles)
-        template: 'src/page-one.ejs',	// here you should write your django template which will be used to generate the actual django template (page-one.html)
+        template: 'src/page-one.ejs',	// here you should write your Django template which will be used to generate the actual django template (page-one.html)
         inject: false
     }),
     new HtmlWebpackPlugin({
@@ -79,9 +81,9 @@ module.exports = {
 **page-one.ejs** and **page-two.ejs** (it uses [ejs](https://ejs.co/#docs) for templating)
 
 ```ejs
-<%# ...write your django template as always... %>
+<%# ...write your Django template as always... %>
 
-<%# send data from django view to js %>
+<%# send data from Django view to js %>
 {{ data_1|json_script:"data-1" }}
 {{ data_2|json_script:"data-2" }}
 
