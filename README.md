@@ -93,3 +93,10 @@ module.exports = {
 <% }) %> 
 ```
 
+# References
+
+- [spectrum-web-components webpack example](https://github.com/adobe/spectrum-web-components/tree/main/projects/example-project-webpack)
+- [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)
+  - [examples/custom-insertion-position](https://github.com/jantimon/html-webpack-plugin/tree/master/examples/custom-insertion-position)
+- [html-webpack-template](https://github.com/jaketrent/html-webpack-template)
+  - [index.ejs](https://github.com/jaketrent/html-webpack-template/blob/master/index.ejs)
