@@ -2,26 +2,45 @@
 
 ## Goal 
 
-The goal is to give Django Template an access to NPM ecosystem (babel, web components, react, jsx, vue, antd ..etc.)  while still having all Django sweets. 
+The goal is to give Django Template an access to NPM ecosystem (babel, web components, react, jsx, vue, antd ..etc.) while still having all Django sweets. 
 
 ## How?
 
 1. Write your JavaScript files using NPM and modern technologies.
-   - d
-   - Optionally, the files should be stored in `project/static/src`.
+   - Files location: Optionally, the files should be stored in `project/static/src`.
 
-2. Write your Django Template (as always) and save it with `.ejs` extension.
-   - You don't need to add `<script src="...">` since this what Webpack is for.
+2. Write your Django Template (as always you do) and save it with `.ejs` extension (!NOT HTML).
    - Use Django [`{{ json_script }}`](https://docs.djangoproject.com/en/3.1/ref/templates/builtins/#json-script) tag to pass initial data from Django view to JavaScript.
+   - [Pass CSRF-token to Javascript](https://docs.djangoproject.com/en/3.1/ref/csrf/#acquiring-the-token-if-csrf-use-sessions-or-csrf-cookie-httponly-is-true)
+   - Tell webpack where to generate `<script src="...">` by using this snippet
+    ```ejs
+    <% htmlWebpackPlugin.tags.bodyTags.forEach( tag => { %>
+      <% if (tag.tagName == 'script') {%>
+          <script src="{% static "<%= tag.attributes.src %>" %}"></script>
+      <% } %>
+    <% }) %>
+    ```
+   - Tell webpack where to generate `<link href="...">` by using this snippet
+    ```ejs
+    <% htmlWebpackPlugin.tags.headTags.forEach( tag => { %>
+      <% if (tag.tagName == 'link') {%>
+          <link href="{% static "<%= tag.attributes.href %>" %}" rel="stylesheet">
+      <% } %>
+    <% }) %>
+    ```
    - Files location:
      - The files can be located anywhere.
-     - Either specify the location in `HtmlWebpackPlugin`. 
-     - Or write a script that find all `.ejs` files in project.
-     - After build, `.ejs` will be coverted to `.html` and be saved as same location as `.ejs` files using `FileManagerPlugin`. 
+     - Either specify the location manually in `HtmlWebpackPlugin`. 
+     - Or write a script that finds all `.ejs` files in project and convert them to suitable Webpack configuration (e.g. [html-webpack-plugin-generator.js](project/static/html-webpack-plugin-generator.js)).
+     - After build, `.ejs` will be coverted to `.html` and be saved as same location as `.ejs` files. 
 
-3. Webpack will bundle your JavaScript files and will generate new Django Template in HTML (based on `.ejs` files  you wrote before).
+3. Webpack will bundle your JavaScript files and will generate new Django Template in HTML (based on `.ejs` files you wrote before).
 
 4. The generated HTML and JS should be ready to be used in Django Template.
+
+## Demo
+
+
 
 ## Why?
 

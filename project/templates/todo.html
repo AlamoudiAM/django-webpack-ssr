@@ -9,13 +9,13 @@
 
 {% endblock %}
 {% block content %}
-    {% for obj in page_obj %}
-    <div>{{ obj.task }}</div>
-    {% endfor %}
-    <div id="container"></div>
+    <div id="add-todo"></div>
+    <div>by Abdulrahman Alamoudi</div>
 {% endblock %}
 {% block body_resources %}
-{{ page_json_obj|json_script:"todo-list" }}
+{{ page_obj|json_script:"todo-list" }}
+{{ page_has_next|json_script:"has-next-page" }}
+{% csrf_token %}
 {% load static %}
 
     
