@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import axios from "axios";
-import { Form, Input, Button, Checkbox, List, Skeleton } from "antd";
+import { Form, Input, Button, Checkbox, List, Skeleton, Modal } from "antd";
 import { Typography } from "antd";
 import { HighlightOutlined } from "@ant-design/icons";
 
@@ -31,6 +31,7 @@ function ToDo() {
 
   return (
     <>
+      <div>total: {list.length}</div>
       <AddToDo list={list} setList={setList} />
       <ToDoList list={list} setList={setList} />
     </>
@@ -39,7 +40,6 @@ function ToDo() {
 
 function AddToDo({ list, setList }) {
   const [addTodoForm] = Form.useForm();
-
   const onFinish = (values) => {
     ajaxOut
       .post("/api/todo/", values)
@@ -93,6 +93,8 @@ function AddToDo({ list, setList }) {
 
 function ToDoList({ list, setList }) {
   const [loading, setLoading] = useState(false);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [deleteModalID, setDeleteModalID] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -130,7 +132,6 @@ function ToDoList({ list, setList }) {
   const updateIsDone = (id, task, done) => {
     setLoading(true);
     const reversedOpt = !done;
-    console.log(id, { task, done: reversedOpt });
 
     ajaxOut
       .put(`/api/todo/${id}/`, { task, done: reversedOpt })
@@ -140,22 +141,6 @@ function ToDoList({ list, setList }) {
             if (item.id === id) item.done = !done;
             return item;
           })
-        );
-        setLoading(false);
-      })
-      .catch(function(error) {
-        console.log(error);
-        setLoading(false);
-      });
-  };
-
-  const deleteTask = (id) => {
-    setLoading(true);
-    ajaxOut
-      .delete(`/api/todo/${id}/`)
-      .then(function(response) {
-        setList(
-          list.filter((item) => item.id !== id ? true:false)
         );
         setLoading(false);
       })
@@ -179,6 +164,27 @@ function ToDoList({ list, setList }) {
 
   return (
     <>
+      <Modal
+        visible={isDeleteModalVisible}
+        onOk={() => {
+          ajaxOut
+            .delete(`/api/todo/${deleteModalID}/`)
+            .then(function(response) {
+              setList(list.filter((item) => (item.id !== deleteModalID ? true : false)));
+              setLoading(false);
+            })
+            .catch(function(error) {
+              console.log(error);
+              setLoading(false);
+            });
+          setIsDeleteModalVisible(false);
+        }}
+        onCancel={() => {
+          setIsDeleteModalVisible(false);
+          setLoading(false);
+        }}
+      >Are you sure ?</Modal>
+
       <List
         className="demo-loadmore-list"
         loading={loading}
@@ -198,7 +204,9 @@ function ToDoList({ list, setList }) {
               <a
                 key="list-loadmore-delete"
                 onClick={() => {
-                  deleteTask(item.id);
+                  setLoading(true);
+                  setIsDeleteModalVisible(true);
+                  setDeleteModalID(item.id);
                 }}
               >
                 Delete

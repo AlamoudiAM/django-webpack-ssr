@@ -6,4 +6,11 @@
   publicPath: 'dist',
   minify: false,
   inject: false
+},{
+  filename: '/private/var/www/django-webpack-ssr/project/templates/login.html',
+  template: '/private/var/www/django-webpack-ssr/project/templates/login.ejs',
+  chunks: [ 'login' ],
+  publicPath: 'dist',
+  minify: false,
+  inject: false
 }];

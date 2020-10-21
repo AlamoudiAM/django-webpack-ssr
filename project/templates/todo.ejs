@@ -9,6 +9,12 @@
 <% }) %>
 {% endblock %}
 {% block content %}
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+        <!-- {% if not perms %}
+        <a class="btn btn-outline-primary" href="{% url 'login' %}">تسجيل الدخول</a>
+        {% endif %} -->
+        <a class="btn btn-outline-primary" href="{% url 'logout' %}">Logout</a>
+    </div>
     <div id="add-todo"></div>
     <div>by Abdulrahman Alamoudi</div>
 {% endblock %}

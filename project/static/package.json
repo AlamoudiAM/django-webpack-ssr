@@ -12,14 +12,11 @@
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
-        "@spectrum-web-components/button": "^0.9.4",
-        "@spectrum-web-components/dropdown": "^0.8.5",
-        "@spectrum-web-components/menu": "^0.4.4",
-        "@spectrum-web-components/styles": "^0.6.1",
         "antd": "^4.7.0",
         "axios": "^0.20.0",
-        "lit-element": "^2.4.0",
-        "lit-html": "^1.0.0",
+        "bootstrap": "^4.5.3",
+        "jquery": "^3.5.1",
+        "popper.js": "^1.16.1",
         "react": "^16.14.0",
         "react-dom": "^16.14.0",
         "vue": "^3.0.1"

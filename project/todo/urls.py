@@ -8,4 +8,5 @@ router.register(r'todo', TodoViewSet)
 urlpatterns = [
     path('', todo_react_page, name='todo'),
     path('api/', include((router.urls, 'todo_app'))),
+    path('accounts/', include('user.urls')),
 ]

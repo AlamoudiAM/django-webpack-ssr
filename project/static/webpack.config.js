@@ -86,6 +86,7 @@ const shared = (env) => {
     entry: {
       // one js per django template
       todo: "./src/todo.js",
+      login: "./src/login.js",
     },
     devtool: "cheap-module-source-map",
     mode: ENV,

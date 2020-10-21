@@ -25,7 +25,7 @@ SECRET_KEY = '&+2gjybnf6t)bq42#=rlap=g4r+d1#u&!v95fdzy^$7^&3cacl'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'todo'
+    'rest_framework.authtoken',
+    'django_filters',
+    'todo',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -124,3 +127,22 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
+
+AUTH_USER_MODEL = 'user.User'
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    #     # 'rest_framework.permissions.IsAuthenticated'
+    # ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
+    ],
+    # 'COERCE_DECIMAL_TO_STRING': False,
+}
+
+LOGIN_REDIRECT_URL = '/'

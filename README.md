@@ -6,12 +6,20 @@ The goal is to give Django Template an access to NPM ecosystem (babel, web compo
 
 ## How?
 
-1. Write your JavaScript files using NPM and modern technologies.
+1. Write your JavaScript files (react, vue ..etc.) using NPM and modern technologies.
    - Files location: Optionally, the files should be stored in `project/static/src`.
+   - Specify JS files in `webpack.config.js`
+     ```javascript
+     entry: {
+       // rule of thumb: one js per django template
+       todo: "./src/todo.js",
+     },
+     ```
+     - Note: any package 
 
 2. Write your Django Template (as always you do) and save it with `.ejs` extension (!NOT HTML).
    - Use Django [`{{ json_script }}`](https://docs.djangoproject.com/en/3.1/ref/templates/builtins/#json-script) tag to pass initial data from Django view to JavaScript.
-   - [Pass CSRF-token to Javascript](https://docs.djangoproject.com/en/3.1/ref/csrf/#acquiring-the-token-if-csrf-use-sessions-or-csrf-cookie-httponly-is-true)
+   - [Pass CSRF-token to Javascript](https://docs.djangoproject.com/en/3.1/ref/csrf/#acquiring-the-token-if-csrf-use-sessions-or-csrf-cookie-httponly-is-true) if needed.
    - Tell webpack where to generate `<script src="...">` by using this snippet
     ```ejs
     <% htmlWebpackPlugin.tags.bodyTags.forEach( tag => { %>
@@ -31,8 +39,8 @@ The goal is to give Django Template an access to NPM ecosystem (babel, web compo
    - Files location:
      - The files can be located anywhere.
      - Either specify the location manually in `HtmlWebpackPlugin`. 
-     - Or write a script that finds all `.ejs` files in project and convert them to suitable Webpack configuration (e.g. [html-webpack-plugin-generator.js](project/static/html-webpack-plugin-generator.js)).
-     - After build, `.ejs` will be coverted to `.html` and be saved as same location as `.ejs` files. 
+     - Or use [this script](project/static/html-webpack-plugin-generator.js) to find all `.ejs` files in project and setup them for HtmlWebpackPlugin configuration.
+     - run `npm run watch` for development or `npm run build:prod` for production. `.ejs` will be converted to `.html` and be saved as same location as `.ejs` files. 
 
 3. Webpack will bundle your JavaScript files and will generate new Django Template in HTML (based on `.ejs` files you wrote before).
 
@@ -53,7 +61,7 @@ Also I'm losing great Django features such as:
 
 - Quick and easy forms setup and validation (+ crispy form). 
 - Form CSRF protection. 
-- Easy passing data from views to Django Template.
+- Passing initial data from views to Django Template.
 - Built-in Authentication views.
 
 On the other hand, I still need to use NPM ecosystem for modernity.
