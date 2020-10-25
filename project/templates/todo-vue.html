@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}ToDo List{% endblock %}
+{% block head_resources %}
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+{% load static %}
+
+{% endblock %}
+{% block content %}
+<div id="app">
+  <v-app id="inspire">
+    <div>
+      <v-app-bar
+        color="deep-grey accent-4"
+        dense
+        dark
+      >  
+        <v-toolbar-title>Todo</v-toolbar-title>
+  
+        <v-spacer></v-spacer>
+  
+        {{user.email}}
+        <v-btn href="{% url 'logout' %}">
+          <v-icon>mdi-logout</v-icon>
+          Logout
+        </v-btn>
+      </v-app-bar>
+      <v-main>
+        <v-container>
+          <v-list
+          subheader
+          two-line
+        >
+          <v-subheader inset>Todo List</v-subheader>
+    
+          <v-list-item
+            v-for="task in todo"
+            :key="task.id"
+          >
+            <v-list-item-avatar>
+              <v-btn icon v-if="!task.done">
+                <v-icon>
+                  mdi-checkbox-blank-circle-outline
+                </v-icon>
+              </v-btn>
+              <v-btn icon v-if="task.done">
+                <v-icon>
+                  mdi-checkbox-marked-circle
+                </v-icon>
+              </v-btn>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title v-text="task.task"></v-list-item-title>
+              <v-list-item-subtitle v-text="task.created_time"></v-list-item-subtitle>
+            </v-list-item-content>
+            <v-list-item-action>
+              <v-btn icon>
+                <v-icon color="grey lighten-1">mdi-pencil-outline</v-icon>
+              </v-btn>
+            </v-list-item-action>
+            <v-list-item-action>
+              <v-btn icon>
+                <v-icon color="grey lighten-1">mdi-delete</v-icon>
+              </v-btn>
+            </v-list-item-action>
+          </v-list-item>
+        </v-list>
+          <v-card>  
+              <v-fab-transition>
+                <v-btn
+                  color="grey"
+                  dark
+                  absolute
+                  top
+                  right
+                  fab
+                >
+                  <v-icon>mdi-plus</v-icon>
+                </v-btn>
+              </v-fab-transition>
+          </v-card>  
+          <v-card
+          class="d-flex justify-center mb-6"
+          flat
+          tile
+        >
+        by Abdulrahman Alamoudi
+        </v-card>
+        </v-container>
+      </v-main>
+    </div>
+  </v-app>
+</div>
+{% endblock %}
+{% block body_resources %}
+{% csrf_token %}
+{{ initial_todos|json_script:"initial-todos" }}
+{% load static %}
+
+    
+        <script src="{% static "dist/js/vendors~todoVue.bundle.js" %}"></script>
+    
+
+    
+        <script src="{% static "dist/js/todoVue.bundle.js" %}"></script>
+    
+
+{% endblock %}

@@ -2,13 +2,18 @@
 {% block title %}ToDo List{% endblock %}
 {% block head_resources %}
 {% load static %}
-<% htmlWebpackPlugin.tags.headTags.forEach( tag => { %>
-    <% if (tag.tagName == 'link') {%>
-        <link href="{% static "<%= tag.attributes.href %>" %}" rel="stylesheet">
-    <% } %>
-<% }) %>
+
+    
+        <link href="{% static "dist/css/vendors~todoReact.bundle.css" %}" rel="stylesheet">
+    
+
+    
+        <link href="{% static "dist/css/todoReact.bundle.css" %}" rel="stylesheet">
+    
+
 {% endblock %}
 {% block content %}
+    {{user.email}}
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
         <!-- {% if not perms %}
         <a class="btn btn-outline-primary" href="{% url 'login' %}">تسجيل الدخول</a>
@@ -19,13 +24,16 @@
     <div>by Abdulrahman Alamoudi</div>
 {% endblock %}
 {% block body_resources %}
-{{ page_obj|json_script:"todo-list" }}
-{{ page_has_next|json_script:"has-next-page" }}
 {% csrf_token %}
+{{ initial_todos|json_script:"initial-todos" }}
 {% load static %}
-<% htmlWebpackPlugin.tags.bodyTags.forEach( tag => { %>
-    <% if (tag.tagName == 'script') {%>
-        <script src="{% static "<%= tag.attributes.src %>" %}"></script>
-    <% } %>
-<% }) %>
+
+    
+        <script src="{% static "dist/js/vendors~todoReact.bundle.js" %}"></script>
+    
+
+    
+        <script src="{% static "dist/js/todoReact.bundle.js" %}"></script>
+    
+
 {% endblock %}

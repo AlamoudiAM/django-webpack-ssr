@@ -38,7 +38,9 @@ const plugins = [
 ]
   // every Django template page should have its own HtmlWebpackPlugin
   .concat(
-    htmlWebpackPluginConfig.map((pageConfig) => new HtmlWebpackPlugin(pageConfig))
+    htmlWebpackPluginConfig.map(
+      (pageConfig) => new HtmlWebpackPlugin(pageConfig)
+    )
   );
 
 function srcPath(subdir) {
@@ -85,8 +87,9 @@ const shared = (env) => {
   return {
     entry: {
       // one js per django template
-      todo: "./src/todo.js",
       login: "./src/login.js",
+      todoReact: "./src/todo-react.js",
+      todoVue: "./src/todo-vue.js",
     },
     devtool: "cheap-module-source-map",
     mode: ENV,
@@ -117,12 +120,37 @@ const shared = (env) => {
           }),
         },
         {
-            test: /\.(png|jpe?g|gif)$/,
-            loader: 'url-loader?limit=10000&name=img/[name].[ext]'
-        }
+          test: /\.s(c|a)ss$/,
+          use: [
+            "vue-style-loader",
+            "css-loader",
+            {
+              loader: "sass-loader",
+              // Requires sass-loader@^7.0.0
+              options: {
+                implementation: require("sass"),
+                indentedSyntax: true, // optional
+              },
+              // Requires sass-loader@^8.0.0
+              options: {
+                implementation: require("sass"),
+                sassOptions: {
+                  indentedSyntax: true, // optional
+                },
+              },
+            },
+          ],
+        },
+        {
+          test: /\.(png|jpe?g|gif)$/,
+          loader: "url-loader?limit=10000&name=img/[name].[ext]",
+        },
       ],
     },
     resolve: {
+      alias: {
+        vue$: "vue/dist/vue.esm.js",
+      },
       extensions: [".js", ".json"],
     },
     plugins,

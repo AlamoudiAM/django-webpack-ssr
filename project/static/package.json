@@ -19,7 +19,8 @@
         "popper.js": "^1.16.1",
         "react": "^16.14.0",
         "react-dom": "^16.14.0",
-        "vue": "^3.0.1"
+        "vue": "^2.6.12",
+        "vuetify": "^2.3.15"
     },
     "devDependencies": {
         "@babel/core": "^7.12.3",
@@ -29,6 +30,7 @@
         "clean-webpack-plugin": "^3.0.0",
         "css-loader": "^3.2.0",
         "cssnano": "^4.1.7",
+        "deepmerge": "^4.2.2",
         "extract-text-webpack-plugin": "^4.0.0-beta.0",
         "file-loader": "^6.1.0",
         "html-webpack-plugin": "^4.5.0",
@@ -36,6 +38,8 @@
         "postcss-import": "^12.0.1",
         "postcss-loader": "^3.0.0",
         "postcss-preset-env": "^6.5.0",
+        "sass": "^1.27.0",
+        "sass-loader": "^10.0.4",
         "style-loader": "^1.0.0",
         "url-loader": "^4.1.0",
         "vue-loader": "^15.9.3",
