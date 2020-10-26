@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
+import Layout from "./react-base";
 import "antd/dist/antd.css";
 import axios from "axios";
 import {
@@ -10,21 +11,13 @@ import {
   List,
   Skeleton,
   Modal,
-  Layout,
-  Menu,
+  Row,
+  Col,
 } from "antd";
 import { Typography } from "antd";
-import {
-  HighlightOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-} from "@ant-design/icons";
+import { HighlightOutlined, PlusOutlined } from "@ant-design/icons";
 import "./todo-react.css";
 
-const { Header, Sider, Content } = Layout;
 const { Paragraph } = Typography;
 
 // get initial data from django
@@ -43,49 +36,13 @@ const ajax = axios.create({
 var page = 1;
 
 function ToDo() {
-  const [collapsed, setCollapsed] = useState(false);
   const [list, setList] = useState(initialTodos);
 
   return (
     <>
-      <Layout>
-        <Sider trigger={null} collapsible collapsed={collapsed}>
-          <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-            <Menu.Item key="1" icon={<UserOutlined />}>
-              nav 1
-            </Menu.Item>
-            <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-              nav 2
-            </Menu.Item>
-            <Menu.Item key="3" icon={<UploadOutlined />}>
-              nav 3
-            </Menu.Item>
-          </Menu>
-        </Sider>
-        <Layout className="site-layout">
-          <Header className="site-layout-background" style={{ padding: 0 }}>
-            {React.createElement(
-              collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-              {
-                className: "trigger",
-                onClick: () => setCollapsed(!collapsed),
-              }
-            )}
-          </Header>
-          <Content
-            className="site-layout-background"
-            style={{
-              margin: "24px 16px",
-              padding: 24,
-              minHeight: 280,
-            }}
-          >
-            <div>total: {list.length}</div>
-            <AddToDo list={list} setList={setList} />
-            <ToDoList list={list} setList={setList} />
-          </Content>
-        </Layout>
+      <Layout whichNav={"1"}>
+        <AddToDo list={list} setList={setList} />
+        <ToDoList list={list} setList={setList} />
       </Layout>
     </>
   );
@@ -93,6 +50,8 @@ function ToDo() {
 
 function AddToDo({ list, setList }) {
   const [addTodoForm] = Form.useForm();
+  const [visible, setVisible] = useState(false);
+
   const onFinish = (values) => {
     ajax
       .post("/todo/api/", values)
@@ -103,6 +62,8 @@ function AddToDo({ list, setList }) {
           task: undefined,
           done: false,
         });
+        // invisible modal
+        setVisible(false);
       })
       .catch(function(error) {
         console.log(error);
@@ -111,35 +72,58 @@ function AddToDo({ list, setList }) {
 
   return (
     <>
-      <Form
-        name="basic"
-        initialValues={{
-          done: false,
-        }}
-        onFinish={onFinish}
-        form={addTodoForm}
-      >
-        <Form.Item
-          label="Task"
-          name="task"
-          rules={[
-            {
-              required: true,
-              message: "Please add an item!",
-            },
-          ]}
-        >
-          <Input contentEditable={true} />
-        </Form.Item>
-        <Form.Item name="done" valuePropName="checked">
-          <Checkbox>Done</Checkbox>
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
+      <Row>
+        <Col xs={12}>total: {list.length}</Col>
+        <Col xs={12}>
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            size="middle"
+            style={{ float: "right" }}
+            onClick={() => {
+              setVisible(true);
+            }}
+          >
             Add
           </Button>
-        </Form.Item>
-      </Form>
+        </Col>
+      </Row>
+
+      <Modal
+        title="Add a task"
+        visible={visible}
+        onOk={() => {
+          addTodoForm.submit();
+        }}
+        onCancel={() => {
+          setVisible(false);
+        }}
+      >
+        <Form
+          name="basic"
+          initialValues={{
+            done: false,
+          }}
+          onFinish={onFinish}
+          form={addTodoForm}
+        >
+          <Form.Item
+            label="Task"
+            name="task"
+            rules={[
+              {
+                required: true,
+                message: "Please add an item!",
+              },
+            ]}
+          >
+            <Input contentEditable={true} />
+          </Form.Item>
+          <Form.Item name="done" valuePropName="checked">
+            <Checkbox>Done</Checkbox>
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
   );
 }

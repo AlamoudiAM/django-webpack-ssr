@@ -33,7 +33,7 @@ The goal is to give Django Template an access to NPM ecosystem (babel, web compo
      ```
 
 2. Write your Django Template (as always you do) and save it with `.ejs` extension (NOT HTML yet!).
-   - Use Django [`{{ json_script }}`](https://docs.djangoproject.com/en/3.1/ref/templates/builtins/#json-script) tag to pass initial data from Django view to JavaScript. **This will make your page render so fast**. 
+   - Use Django [`{{ json_script }}`](https://docs.djangoproject.com/en/3.1/ref/templates/builtins/#json-script) tag to pass initial data from Django view to JavaScript and use it as initial state. **This will make your page render faster than calling API via DRF**. 
    - [Pass CSRF-token to Javascript](https://docs.djangoproject.com/en/3.1/ref/csrf/#acquiring-the-token-if-csrf-use-sessions-or-csrf-cookie-httponly-is-true) when using `POST`, `PUT`, and `DELETE` methods.
    - You don't have to specify `<script src="...">` since this what Webpack is for. Just tell webpack where to generate `<script src="...">` by using this snippet
     ```ejs

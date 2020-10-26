@@ -27,31 +27,33 @@
       </v-app-bar>
       <v-main>
         <v-container>
+          <div style="margin-left: 72px;">Total: [[todo.length]]</div>
           <v-list
           subheader
           two-line
-        >
-          <v-subheader inset>Todo List</v-subheader>
-    
+        >    
           <v-list-item
             v-for="task in todo"
             :key="task.id"
           >
             <v-list-item-avatar>
-              <v-btn icon v-if="!task.done">
+              <v-btn icon v-if="!task.done" v-on:click="done(task.id)">
                 <v-icon>
                   mdi-checkbox-blank-circle-outline
                 </v-icon>
               </v-btn>
-              <v-btn icon v-if="task.done">
+              <v-btn icon v-if="task.done" v-on:click="done(task.id)">
                 <v-icon>
                   mdi-checkbox-marked-circle
                 </v-icon>
               </v-btn>
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title v-text="task.task"></v-list-item-title>
-              <v-list-item-subtitle v-text="task.created_time"></v-list-item-subtitle>
+              <v-list-item-title>
+                <del v-if="task.done">[[task.task]]</del>
+                <span v-if="!task.done">[[task.task]]</span>
+              </v-list-item-title>
+              <v-list-item-subtitle v-text="formatDate(task.created_time)"></v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
               <v-btn icon>
@@ -59,9 +61,47 @@
               </v-btn>
             </v-list-item-action>
             <v-list-item-action>
-              <v-btn icon>
-                <v-icon color="grey lighten-1">mdi-delete</v-icon>
-              </v-btn>
+              <v-row justify="center">
+                <v-dialog
+                  v-model="deleteDialog"
+                  persistent
+                  max-width="290"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn                         
+                        color="primary"
+                        dark
+                        v-bind="attrs"
+                        v-on="on"
+                        icon>
+                      <v-icon color="grey lighten-1">mdi-delete</v-icon>
+                    </v-btn>
+                  </template>
+                  <v-card>
+                    <v-card-title class="headline">
+                      Use Google's location service?
+                    </v-card-title>
+                    <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn
+                        color="green darken-1"
+                        text
+                        @click="deleteDialog = false"
+                      >
+                        Disagree
+                      </v-btn>
+                      <v-btn
+                        color="green darken-1"
+                        text
+                        @click="deleteDialog = false"
+                      >
+                        Agree
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-row>
             </v-list-item-action>
           </v-list-item>
         </v-list>
@@ -96,6 +136,10 @@
 {% csrf_token %}
 {{ initial_todos|json_script:"initial-todos" }}
 {% load static %}
+
+    
+        <script src="{% static "dist/js/vendors~todoReact~todoVue.bundle.js" %}"></script>
+    
 
     
         <script src="{% static "dist/js/vendors~todoVue.bundle.js" %}"></script>

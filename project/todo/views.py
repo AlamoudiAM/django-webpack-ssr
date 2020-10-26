@@ -4,6 +4,7 @@ from .serializers import ToDoSerializer
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 
 
 class TodoViewSet(viewsets.ModelViewSet):
@@ -27,8 +28,9 @@ def todo_react_page(request):
     todos = ToDo.objects.filter(user=user).order_by("-id")
 
     return render(request, 'todo-react.html', context={
-        "user": request.user,
-        "initial_todos": ToDoSerializer(todos, many=True).data
+        "initial_todos": ToDoSerializer(todos, many=True).data,
+        "logout_url": reverse('logout'),
+        "email": request.user.email,
     })
 
 
