@@ -109,3 +109,4 @@ venv
 __pycache__
 stats.json
 package-lock.json
+report
