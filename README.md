@@ -1,9 +1,10 @@
 # django-webpack-ssr
 
-*Start simple, grow complex*
-*Best of both worlds*
-*Next, Nuxt alternative*
-**This guide will let you use (react, vue ..etc.) with django as server-side rendering and multi page app.**
+*Start simple, grow complex* \
+*Best of both worlds, hybrid approach* \
+*Next, Nuxt alternative* \
+
+**This guide will let you use (react, vue ..etc.) with django as server-side rendering and multi page app.** \
 
 ## Goal 
 
@@ -79,9 +80,24 @@ The goal is to give Django Template an access to NPM ecosystem (babel, web compo
 The demo implement a todo app in Vue and React. View authentication, routing, initial data, and API are handled by Django.
 
 ### Run
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+cd project/static/
+npm i
+# in one terminal tab
+npm run build:prod
+# in another terminal tab
+cd project/
+python manage.py runserver
+
+# url: http://127.0.0.1:8000/todo/react/
+# email: admin@domain.com
+# password: 123456
+```
 
 ### Demo Code Explanation
-
 ## Why?
 
 In my experience, separating frontend from backend for solo developer is exhausting. I'm not saying it's a bad idea but I'm saying it isn't productive for single developer. As a solo developer I cannot handle:

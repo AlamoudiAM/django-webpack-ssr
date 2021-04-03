@@ -32,14 +32,4 @@ def todo_react_page(request):
         "logout_url": reverse('logout'),
         "email": request.user.email,
     })
-
-
-@login_required(redirect_field_name='login')
-def todo_vue_page(request):
-    user = request.user
-    todos = ToDo.objects.filter(user=user).order_by("-id")
-
-    return render(request, 'todo-vue.html', context={
-        "user": request.user,
-        "initial_todos": ToDoSerializer(todos, many=True).data
-    })
+    

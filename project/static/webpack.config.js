@@ -89,7 +89,6 @@ const shared = (env) => {
       // one js per django template
       login: "./src/login.js",
       todoReact: "./src/todo-react.js",
-      todoVue: "./src/todo-vue.js",
     },
     devtool: "cheap-module-source-map",
     mode: ENV,
@@ -120,37 +119,12 @@ const shared = (env) => {
           }),
         },
         {
-          test: /\.s(c|a)ss$/,
-          use: [
-            "vue-style-loader",
-            "css-loader",
-            {
-              loader: "sass-loader",
-              // Requires sass-loader@^7.0.0
-              options: {
-                implementation: require("sass"),
-                indentedSyntax: true, // optional
-              },
-              // Requires sass-loader@^8.0.0
-              options: {
-                implementation: require("sass"),
-                sassOptions: {
-                  indentedSyntax: true, // optional
-                },
-              },
-            },
-          ],
-        },
-        {
           test: /\.(png|jpe?g|gif)$/,
           loader: "url-loader?limit=10000&name=img/[name].[ext]",
         },
       ],
     },
     resolve: {
-      alias: {
-        vue$: "vue/dist/vue.esm.js",
-      },
       extensions: [".js", ".json"],
     },
     plugins,
