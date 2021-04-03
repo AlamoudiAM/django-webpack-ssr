@@ -106,4 +106,5 @@ dist
 # Python
 venv
 .idea
-__pycache__stats.json
+__pycache__
+stats.json
