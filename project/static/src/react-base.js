@@ -32,7 +32,7 @@ export default function({ children, whichNav }) {
   const [collapsed, setCollapsed] = useState(false);
   return (
     <>
-      <Layout>
+      <Layout style={{'height': '100%'}}>
         <Sider trigger={null} collapsible collapsed={collapsed}>
           <div className="logo">Todo App</div>
           <Menu theme="dark" mode="inline" defaultSelectedKeys={[whichNav]}>

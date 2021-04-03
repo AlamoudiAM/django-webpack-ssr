@@ -94,7 +94,7 @@ python manage.py runserver
 
 # url: http://127.0.0.1:8000/todo/react/
 # email: admin@domain.com
-# password: 123456
+# password: password
 ```
 
 ### Demo Code Explanation

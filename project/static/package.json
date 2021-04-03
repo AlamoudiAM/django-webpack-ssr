@@ -6,7 +6,7 @@
     "scripts": {
         "build": "webpack",
         "build:prod": "webpack --env.NODE_ENV=production --optimize-minimize",
-        "watch": "webpack --watch --progress",
+        "watch": "webpack --watch --env.NODE_ENV=development --progress",
         "ejs-config": "node html-webpack-plugin-generator.js"
     },
     "author": "",
