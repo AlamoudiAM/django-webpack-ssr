@@ -47,7 +47,7 @@
 {% endblock %}
 {% block body_resources %}
 {% load static %}
-<% htmlWebpackPlugin.tags.bodyTags.forEach( tag => { %>
+<% htmlWebpackPlugin.tags.headTags.forEach( tag => { %>
     <% if (tag.tagName == 'script') {%>
         <script src="{% static "<%= tag.attributes.src %>" %}"></script>
     <% } %>

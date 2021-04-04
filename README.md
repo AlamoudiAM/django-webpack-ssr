@@ -87,7 +87,7 @@ pip install -r requirements.txt
 cd project/static/
 npm i
 # in one terminal tab
-npm run build:prod
+npm run start
 # in another terminal tab
 cd project/
 python manage.py runserver
